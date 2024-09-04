@@ -1,0 +1,11 @@
+<!-- Путь: templates/news/home.html -->
+{% extends 'news/default.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block header %}Главная страница{% endblock %}
+
+{% block content %}
+    <h1>Это информационный портал</h1>
+    <p>Добро пожаловать на наш новостной портал! Перейдите в раздел <a href="{% url 'article_list' %}">новостей</a>, чтобы увидеть последние события.</p>
+{% endblock %}

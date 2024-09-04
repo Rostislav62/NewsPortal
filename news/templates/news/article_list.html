@@ -1,0 +1,23 @@
+<!-- Путь: templates/news/news_list.html -->
+{% extends 'news/default.html' %}
+{% load censor_filters %}  <!-- Подключение фильтра censor -->
+
+{% block title %}Список новостей{% endblock %}
+
+{% block header %}Список новостей{% endblock %}
+
+{% block content %}
+    <h1>Новости</h1>
+    <ul>
+        {% for article in articles %}
+            <li style="margin-bottom: 10px;">
+                <strong>{{ article.title|censor }}</strong> <br>
+                <small>Дата: {{ article.publication_date|date:"d.m.Y" }}</small> <br>
+                {{ article.content|slice:":20" }}...
+                <a href="{% url 'article_detail' article.id %}">подробнее</a>
+            </li>
+        {% empty %}
+            <p>Новостей пока нет.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
