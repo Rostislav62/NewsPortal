@@ -20,3 +20,29 @@ Article.objects.create(
     publication_date=date(2024, 8, 27),
     author="Ирина Павлова"
 )
+
+
+Вот структура файлов:
+NewsPortal/
+│
+├── news/
+│   ├── templates/
+│   │   └── news/
+│   │       └── default.html
+│   └── templatetags/
+│       └── censor_filters.py
+├── static/
+│   └── styles.css
+├── manage.py
+├── NewsPortal/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── newsportal/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── models.py
+    ├── tests.py
+    └── views.py
