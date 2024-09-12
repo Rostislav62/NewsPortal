@@ -1,4 +1,5 @@
-<!-- Путь: templates/news/news_list.html -->
+
+<!-- Путь: templates/news/article_list.html -->
 {% extends 'news/default.html' %}
 {% load censor_filters %}  <!-- Подключение фильтра censor -->
 
@@ -7,9 +8,10 @@
 {% block header %}Список новостей{% endblock %}
 
 {% block content %}
-    <h1>Новости</h1>
+    <h1>Новости </h1>
+    <a href="{% url 'article_search' %}" style="font-size: smaller; color: darkgreen;">Найти новость</a>
     <ul>
-        {% for article in articles %}
+        {% for article in page_obj %}
             <li style="margin-bottom: 10px;">
                 <strong>{{ article.title|censor }}</strong> <br>
                 <small>Дата: {{ article.publication_date|date:"d.m.Y" }}</small> <br>
@@ -20,4 +22,36 @@
             <p>Новостей пока нет.</p>
         {% endfor %}
     </ul>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" title="Первая страница">&laquo;&laquo;</a>
+                <a href="?page={{ page_obj.previous_page_number }}" title="Предыдущая страница">&laquo;</a>
+            {% else %}
+                <span class="disabled">&laquo;&laquo;</span>
+                <span class="disabled">&laquo;</span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <span class="current">{{ num }}</span>
+                {% elif num > page_obj.number|add:"-2" and num < page_obj.number|add:"2" %}
+                    <a href="?page={{ num }}" title="Страница {{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" title="Следующая страница">&raquo;</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" title="Последняя страница">&raquo;&raquo;</a>
+                <a href="{% url 'article_search' %}" style="font-size: smaller; color: darkgreen;">Найти новость</a>
+            {% else %}
+                <span class="disabled">&raquo;</span>
+                <span class="disabled">&raquo;&raquo;</span>
+            {% endif %}
+        </span>
+    </div>
 {% endblock %}
+
+

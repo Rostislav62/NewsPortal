@@ -3,7 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}News Portal{% endblock %}</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,17 +15,13 @@
             box-sizing: border-box;
         }
         .header, .footer {
-            height: 20mm;
             background-color: darkgreen;
             color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 15px;
         }
         .footer {
             background-color: lightgray;
             color: black;
+            text-align: center;
         }
         .header-line, .footer-line {
             height: 2px;
@@ -39,10 +38,13 @@
             text-decoration: none;
             color: white;
         }
+        .link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="header d-flex justify-content-between align-items-center p-3">
         <h2>{% block header %}Главная страница{% endblock %}</h2>
         <a href="{% url 'article_list' %}" class="link">Новости</a>
     </div>
@@ -53,11 +55,18 @@
     </div>
 
     <div class="footer-line"></div>
-    <div class="footer">
-        <div>
+    <div class="footer py-3 d-flex justify-content-between align-items-center" style="padding: 0 5%;">
+        <a href="{% url 'home' %}" class="link">На главную</a>
+        <div class="text-end">
             Наш телефон: +353 871444333 <br>
             наш email: dj_pr2@skillprogect.com
         </div>
     </div>
+
+
+    <!-- Подключение Bootstrap JS и зависимостей (опционально) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
