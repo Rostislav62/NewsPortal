@@ -71,10 +71,6 @@ def delete_article(request, pk):
     return render(request, 'articles/delete_article.html', {'item': item})
 
 
-
-
-
-
 def article_list(request):
     articles = Article.objects.all().order_by('-publication_date')
     paginator = Paginator(articles, 10)
@@ -161,25 +157,40 @@ def article_search(request):
 
 
 
+@login_required
 def create_news(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         author = request.POST.get('author')
         content = request.POST.get('content')
+        record_type = request.POST.get('record_type')
 
-        if not title or not author or not content:
+        # Проверка заполненности обязательных полей и типа записи
+        if not title or not author or not content or not record_type:
             return render(request, 'news/create_news.html', {
                 'error': 'Все поля должны быть заполнены.'
             })
 
+        # Определение типа записи на основе выбранной радиокнопки
+        if record_type == 'news':
+            type_value = True
+        elif record_type == 'article':
+            type_value = False
+        else:
+            return render(request, 'news/create_news.html', {
+                'error': 'Выберите тип записи!'
+            })
+
+        # Создание новой записи в базе данных
         Article.objects.create(
             title=title,
             author=author,
             content=content,
-            publication_date=date.today(),
-            type=True
+            publication_date=timezone.now(),  # Установка текущей даты и времени
+            type=type_value
         )
         return redirect('admin_page')
+
     return render(request, 'news/create_news.html')
 
 def create_article(request):
